@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Study</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="noLogsMessage">message</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="logout">Logout?</string>
+    <string name="mainSubmitButton" />
+    <string name="mainRepsHint" />
+    <string name="mainWeightHint" />
+    <string name="mainExerciseHint" />
+</resources>
