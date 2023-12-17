@@ -11,4 +11,6 @@
     <string name="mainRepsHint" />
     <string name="mainWeightHint" />
     <string name="mainExerciseHint" />
+    <string name="view_decks">View Decks</string>
+    <string name="edit_decks">Edit Decks</string>
 </resources>

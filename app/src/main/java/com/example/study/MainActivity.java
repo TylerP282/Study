@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
         loginUser(mUserId);
 
+        User user = mUser;
+        if( user != null && user.isAdmin()){
+            Button adminButton = findViewById(R.id.buttonAdmin);
+            adminButton.setVisibility(View.VISIBLE);
+        }
+
         TextView welcomeTextView = findViewById(R.id.textViewWelcome);
         welcomeTextView.setText("Welcome " + "\n" + mUser.getUsername());
 
@@ -60,22 +67,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //mMainDisplay = findViewById(R.id.mainGymLogDisplay);
-        //mMainDisplay.setMovementMethod(new ScrollingMovementMethod());
+        Button viewDecksButton = findViewById(R.id.buttonCreateDeck);
+        Button reviewDecksButton = findViewById(R.id.buttonReviewDecks);
+        Button adminButton = findViewById(R.id.buttonAdmin);
 
+        viewDecksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startViewDecksActivity();
+            }
+        });
 
-        //mSubmitButton = findViewById(R.id.mainSubmitButton);
+        reviewDecksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startReviewDecksActivity();
+            }
+        });
+        adminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAdminButtonClick();
+            }
+        });
 
-        refreshDisplay();
+    }
 
-        //mSubmitButton.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        Study log = getValuesFromDisplay();
-        //        mStudyDAO.insert(log);
-        //        refreshDisplay();
-        //    }
-      //  });
+    private void onAdminButtonClick() {
+        List<String> usernames = mStudyDAO.getAllUsernames();
+        showUserListDialog(usernames);
+    }
+
+    private void showUserListDialog(List<String> usernames) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("List of Users");
+        builder.setItems(usernames.toArray(new String[0]), null); // null click listener as it's just for display
+        builder.show();
+    }
+
+    private void startReviewDecksActivity() {
+        Intent intent = ReviewDecksActivity.intentFactory(getApplicationContext(),mUserId);
+        startActivity(intent);
+    }
+
+    private void startViewDecksActivity() {
+        Intent intent = ViewDecksActivity.intentFactory(getApplicationContext(),mUserId);
+        startActivity(intent);
     }
 
     private void debug(){
@@ -144,8 +181,9 @@ public class MainActivity extends AppCompatActivity {
         List<User> users = mStudyDAO.getAllUsers();
 
         if(users.size() <= 0){
-            User defaultUser = new User("abc","123");
-            User altUser = new User("def","123");
+            User defaultUser = new User("testuser1","testuser1");
+            User altUser = new User("admin2","admin2");
+            altUser.setAdmin(true);
             mStudyDAO.insert(defaultUser,altUser);
         }
         Intent intent = LoginActivity.intentFactory(this);
@@ -191,30 +229,6 @@ public class MainActivity extends AppCompatActivity {
         addUserToPreference(-1);
     }
 
-    private Study getValuesFromDisplay(){
-
-        //todo
-        return new Study(1);
-    }
-
-    private void refreshDisplay(){
-        mStudy = mStudyDAO.getStudyByUserId(mUserId);
-
-        if(mStudy.size() <= 0){
-            //mMainDisplay.setText(R.string.noLogsMessage);
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for(Study log : mStudy){
-            sb.append(log);
-            sb.append("\n");
-            sb.append("=-=-=-=-=-=-");
-            sb.append("\n");
-        }
-        //mMainDisplay.setText(sb.toString());
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -231,6 +245,21 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void addDeckToDatabase(String deckName){
+        Deck newDeck = new Deck(0,mUserId,deckName);
+        newDeck.setDeckName(deckName);
+        mStudyDAO.insertDeck(newDeck);
+    }
+
+    private void onAddDeckButtonClick(){
+        String deckName ="Example";
+        addDeckToDatabase(deckName);
+    }
+
+    private void fetchAndDisplayDecks(){
+        List<Deck> decks = mStudyDAO.getAllDecks();
     }
 
     public static Intent intentFactory(Context context, int userId) {

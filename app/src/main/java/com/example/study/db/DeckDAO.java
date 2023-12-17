@@ -21,4 +21,6 @@ public interface DeckDAO {
     void deleteDeck(Deck deck);
     @Query("SELECT * FROM deck_table")
     List<Deck> getAllDecks();
+    @Query("SELECT * FROM deck_table WHERE mUserId = :userId")
+    List<Deck> getUserDecks(int userId);
 }

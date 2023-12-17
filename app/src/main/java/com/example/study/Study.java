@@ -13,7 +13,6 @@ public class Study {
     @PrimaryKey(autoGenerate = true)
     private int mLogId;
     private int mUserId;
-    //private Date mDate;
 
     public Study(int userId){
         mUserId = userId;
@@ -34,12 +33,4 @@ public class Study {
         this.mLogId = mLogId;
     }
 
-
-    /**
-     * private int mReps;
-     * private double mWeight;
-     * private Date mDate;
-     */
-
-    //getter + setter + toString
 }

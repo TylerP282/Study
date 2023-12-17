@@ -7,11 +7,13 @@ import androidx.room.PrimaryKey;
 public class Deck {
     @PrimaryKey(autoGenerate = true)
     private int mDeckId;
+    private int mUserId;
     private String mDeckName;
 
-    public Deck(int deckId,String deckName){
-        mDeckId = deckId;
-        mDeckName = deckName;
+    public Deck(int deckId,int userId,String deckName){
+        this.mDeckId = deckId;
+        this.mDeckName = deckName;
+        this.mUserId = userId;
     }
 
     public int getDeckId() {
@@ -20,6 +22,14 @@ public class Deck {
 
     public void setDeckId(int DeckId) {
         this.mDeckId = DeckId;
+    }
+
+    public int getUserId(){
+        return mUserId;
+    }
+
+    public void setUserId(int userId){
+        this.mUserId = userId;
     }
 
     public String getDeckName() {
@@ -34,6 +44,7 @@ public class Deck {
     public String toString() {
         return "Deck{" +
                 "mDeckId=" + mDeckId +
+                ", mUserId=" + mUserId +
                 ", mDeckName='" + mDeckName + '\'' +
                 '}';
     }

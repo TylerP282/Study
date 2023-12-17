@@ -12,12 +12,19 @@ public class User {
     private int mUserId;
     private String mUsername;
     private String mPassword;
+    private boolean isAdmin;
 
     public User(String username, String password){
         mUsername = username;
         mPassword = password;
     }
 
+    public boolean isAdmin(){
+        return isAdmin;
+    }
+    public void setAdmin(boolean admin){
+        isAdmin = admin;
+    }
     public int getUserId(){
         return mUserId;
     }

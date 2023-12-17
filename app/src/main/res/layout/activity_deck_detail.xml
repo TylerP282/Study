@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/deckDetailDeckName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deck Name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Sample Deck" />
+
+
+    <Button
+        android:id="@+id/btnAddCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Card"
+        android:layout_marginTop="16dp" />
+
+
+    <ListView
+        android:id="@+id/listViewFlashcards"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"/>
+
+
+
+    <Button
+        android:id="@+id/deckDetailDeleteDeck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Deck"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"/>
+
+
+</LinearLayout>
